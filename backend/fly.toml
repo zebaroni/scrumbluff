@@ -1,0 +1,21 @@
+app = 'scrum-bluff'
+primary_region = 'gru'
+
+[build]
+  [build.args]
+    GO_VERSION = '1.22'
+
+[env]
+  PORT = '8080'
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 1
+  max_machines_runnin = 1
+  processes = ['app']
+
+[[vm]]
+  size = 'shared-cpu-1x'
