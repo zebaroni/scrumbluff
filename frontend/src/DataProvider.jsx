@@ -188,6 +188,11 @@ const DataProvider = ({children}) => {
     }
 
     const setUsername = (username) => {
+        if(ws.current) {
+            ws.current.close();
+            ws.current = null;
+        }
+
         localStorage.setItem("username", username)
         _setUsername(username);
     }

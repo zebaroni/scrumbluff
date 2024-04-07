@@ -1,4 +1,4 @@
-import {AppShell, Burger, Group} from "@mantine/core";
+import {AppShell, Text, Tooltip} from "@mantine/core";
 import React, {useContext} from "react";
 import {useDisclosure} from "@mantine/hooks";
 import MainView from "@/components/MainView";
@@ -8,11 +8,14 @@ import UsernamePage from "@/components/UsernamePage";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "../../public/logo.png";
-import {NextSeo} from 'next-seo';
 
 export default function Home() {
     const [opened, {toggle}] = useDisclosure();
-    const {username} = useContext(DataContext);
+    const {username, setUsername} = useContext(DataContext);
+
+    const _changeUsername = () => {
+        setUsername("")
+    }
 
     if (!username) {
         return <UsernamePage/>
@@ -31,13 +34,22 @@ export default function Home() {
                     padding="md"
                 >
                     <AppShell.Header>
-                        <Group h="100%" px="md">
-                            <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm"/>
+                        <div style={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            height: '100%',
+                            alignItems: 'center',
+                            justifyContent: 'space-between'
+                        }}
+                        >
                             <Link href={"/"} style={{textDecoration: 'none', color: 'black'}}>
                                 <Image style={{marginLeft: 110}} width={150} src={logo}
                                        alt="free online planning poker tool scrumbluff logo"/>
                             </Link>
-                        </Group>
+                            <Tooltip label="Click to change your username">
+                                <Text onClick={() => _changeUsername()} style={{marginRight: 30, cursor: 'pointer'}}>{username}</Text>
+                            </Tooltip>
+                        </div>
                     </AppShell.Header>
                     <AppShell.Navbar p="md" style={{overflowY: 'auto'}}>
                         <Sidebar/>
