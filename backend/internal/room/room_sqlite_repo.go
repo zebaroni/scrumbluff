@@ -3,6 +3,7 @@ package room
 import (
 	"database/sql"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"sync"
@@ -24,6 +25,10 @@ func (r *RoomRepoSqlite) FindRoom(roomId RoomID) (*Room, error) {
 
 	err := r.db.QueryRow("SELECT data FROM rooms WHERE id = ?", roomId.String()).Scan(&res)
 	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, nil
+		}
+
 		log.Println(err)
 		return nil, err
 	}

@@ -19,3 +19,7 @@ primary_region = 'gru'
 
 [[vm]]
   size = 'shared-cpu-1x'
+
+[mounts]
+  source="scrumbluff_volume"
+  destination="/scrumbluff_data"

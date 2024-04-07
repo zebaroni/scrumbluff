@@ -6,10 +6,12 @@ import (
 	"log"
 )
 
+const DB_FILE_PATH = "/scrumbluff_data/scrumbluff.db"
+
 func SetupDatabase() *sql.DB {
 	log.Println("Setting up database...")
 
-	db, err := sql.Open("sqlite3", "./scrumbluff.db")
+	db, err := sql.Open("sqlite3", DB_FILE_PATH)
 	if err != nil {
 		log.Fatal(err)
 	}
