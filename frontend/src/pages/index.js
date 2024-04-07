@@ -21,28 +21,28 @@ export default function Home() {
     return (
         <>
             <Head>
-                <title>Scrum Bluff - Planning Poker Tool</title>
-                <meta name="description"
-                      content="Elevate your team's productivity with our free online planning poker tool. Create your virtual room, add topics, and engage in insightful discussions."/>
-                <meta name="viewport" content="width=device-width, initial-scale=1"/>
-                <meta name="keywords" content="planning poker, scrum, virtual room, free, online, tool"/>
-                <meta name="language" content="English"/>
-                <meta name="robots" content="index, follow"/>
-                <link rel="icon" href="/favicon.ico"/>
+                <title>Scrum Bluff - Free Planning Poker Tool</title>
+                <meta name="description" content="Elevate your team's productivity with our free online planning poker tool. Create your virtual room, add topics, and engage in insightful discussions."/>
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <meta name="keywords" content="planning poker, scrum, virtual room, free, online, tool" />
+                <meta name="language" content="English" />
+                <meta name="robots" content="index, follow" />
+                <link rel="icon" href="/favicon.ico" />
 
-                <meta property="og:title" content="Scrum Bluff - Planning Poker Tool"/>
-                <meta property="og:description"
-                      content="Elevate your team's productivity with our free online planning poker tool. Instantly create your virtual room, add topics, and engage in insightful discussions."/>
-                <meta property="og:image" content="https://www.scrumbluff.com/social-card.png"/>
-                <meta property="og:url" content="https://www.scrumbluff.com/"/>
+                {/*Facebook Meta Tags*/}
+                <meta property="og:url" content="https://scrumbluff.com"/>
+                <meta property="og:type" content="website"/>
+                <meta property="og:title" content="Scrum Bluff - Free Planning Poker Tool"/>
+                <meta property="og:description" content="Elevate your team's productivity with our free online planning poker tool. Create your virtual room, add topics, and engage in insightful discussions."/>
+                <meta property="og:image" content="https://opengraph.b-cdn.net/production/documents/78734bd4-501d-4fc9-9fcd-574a9207ecf4.png?token=eMjLlJ8EU-9WnbMtmKjU2tknVTqlY8UnrRK_bnEA5_I&height=628&width=1200&expires=33248515689"/>
 
+                {/*Twitter Meta Tags*/}
                 <meta name="twitter:card" content="summary_large_image"/>
-                <meta property="twitter:url" content="https://www.scrumbluff.com/"/>
                 <meta property="twitter:domain" content="scrumbluff.com"/>
-                <meta name="twitter:title" content="Scrum Bluff - Planning Poker Tool"/>
-                <meta name="twitter:description"
-                      content="Elevate your team's productivity with our free online planning poker tool. Instantly create your virtual room, add topics, and engage in insightful discussions."/>
-                <meta name="twitter:image" content="https://www.scrumbluff.com/social-card.png"/>
+                <meta property="twitter:url" content="https://scrumbluff.com"/>
+                <meta name="twitter:title" content="Scrum Bluff - Free Planning Poker Tool"/>
+                <meta name="twitter:description" content="Elevate your team's productivity with our free online planning poker tool. Create your virtual room, add topics, and engage in insightful discussions."/>
+                <meta name="twitter:image" content="https://opengraph.b-cdn.net/production/documents/78734bd4-501d-4fc9-9fcd-574a9207ecf4.png?token=eMjLlJ8EU-9WnbMtmKjU2tknVTqlY8UnrRK_bnEA5_I&height=628&width=1200&expires=33248515689"/>
             </Head>
             <main>
                 <AppShell
