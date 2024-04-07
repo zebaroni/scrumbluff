@@ -38,3 +38,10 @@ type AddCommentCommand struct {
 type ToggleVisibility struct {
 	TopicID ulid.ULID `json:"topic_id"`
 }
+
+type ChangeTopicDetails struct {
+	TopicID ulid.ULID `json:"topic_id"`
+	Title   string    `json:"title"`
+	Desc    string    `json:"desc"`
+	Url     string    `json:"url"`
+}

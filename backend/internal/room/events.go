@@ -19,37 +19,44 @@ type UserVotedEvent struct {
 }
 
 type TopicAddedEvent struct {
-	TopicID     ulid.ULID `json:"topic_id"`
+	TopicID     TopicID   `json:"topic_id"`
 	Title       string    `json:"title" json:"title"`
 	Description string    `json:"description" json:"description"`
 	CreatedAt   time.Time `json:"created_at" json:"created_at"`
 }
 
 type TopicRemovedEvent struct {
-	TopicID ulid.ULID `json:"topic_id"`
+	TopicID TopicID `json:"topic_id"`
 }
 
 type TopicVotesResetedEvent struct {
-	TopicID ulid.ULID `json:"topic_id"`
+	TopicID TopicID `json:"topic_id"`
 }
 
 type TopicCompletedEvent struct {
-	TopicID ulid.ULID `json:"topic_id"`
-	Points  string    `json:"points"`
+	TopicID TopicID `json:"topic_id"`
+	Points  string  `json:"points"`
+}
+
+type TopicUpdatedEvent struct {
+	TopicID TopicID `json:"topic_id"`
+	Title   string  `json:"title"`
+	Desc    string  `json:"desc"`
+	Url     string  `json:"url"`
 }
 
 type CurrentTopicChangedEvent struct {
-	TopicID ulid.ULID `json:"topic_id"`
+	TopicID TopicID `json:"topic_id"`
 }
 
 type CommentAddedEvent struct {
-	CommentID ulid.ULID `json:"comment_id"`
+	CommentID CommentID `json:"comment_id"`
 	Content   string    `json:"content"`
 	CreatedAt time.Time `json:"created_at"`
 }
 
 type VisibilityToggled struct {
-	TopicID ulid.ULID `json:"topic_id"`
+	TopicID TopicID `json:"topic_id"`
 }
 
 type Auth struct {

@@ -246,6 +246,12 @@ func (hub *Hub) ListenClientCommands(userConn *UserConnection) {
 			if err == nil {
 				r.ToggleVisibility(cmd.TopicID)
 			}
+		case "CHANGE_TOPIC_DETAILS":
+			var cmd ChangeTopicDetails
+			err := json.Unmarshal(m.Data, &cmd)
+			if err == nil {
+				r.ChangeTopicDetails(cmd.TopicID, cmd.Title, cmd.Desc, cmd.Url)
+			}
 		}
 
 		err = hub.repo.Save(r)

@@ -1,4 +1,4 @@
-import {AppShell, Text, Tooltip} from "@mantine/core";
+import {AppShell, Box, Text, Tooltip} from "@mantine/core";
 import React, {useContext} from "react";
 import {useDisclosure} from "@mantine/hooks";
 import MainView from "@/components/MainView";
@@ -8,10 +8,12 @@ import UsernamePage from "@/components/UsernamePage";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "../../public/logo.png";
+import {FaUser} from "react-icons/fa";
 
 export default function Home() {
     const [opened, {toggle}] = useDisclosure();
     const {username, setUsername} = useContext(DataContext);
+
 
     const _changeUsername = () => {
         setUsername("")
@@ -42,12 +44,17 @@ export default function Home() {
                             justifyContent: 'space-between'
                         }}
                         >
-                            <Link href={"/"} style={{textDecoration: 'none', color: 'black'}}>
-                                <Image style={{marginLeft: 110}} width={150} src={logo}
-                                       alt="free online planning poker tool scrumbluff logo"/>
-                            </Link>
+                            <Box w={{base: 300, md: 400}} style={{display: 'flex', justifyContent: 'center'}}>
+                                <Link href={"/"} style={{textDecoration: 'none', color: 'black'}}>
+                                    <Image width={150} src={logo}
+                                           alt="free online planning poker tool scrumbluff logo"/>
+                                </Link>
+                            </Box>
+
                             <Tooltip label="Click to change your username">
-                                <Text onClick={() => _changeUsername()} style={{marginRight: 30, cursor: 'pointer'}}>{username}</Text>
+                                <Text onClick={() => _changeUsername()} style={{marginRight: 30, cursor: 'pointer'}}>
+                                    <FaUser/> {username}
+                                </Text>
                             </Tooltip>
                         </div>
                     </AppShell.Header>

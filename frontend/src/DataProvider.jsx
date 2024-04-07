@@ -69,6 +69,20 @@ const DataProvider = ({children}) => {
         }))
     }
 
+    const updateTopic = async (topicId, title, desc, url) => {
+        if (!ws.current) return;
+
+        ws.current.send(JSON.stringify({
+            "type": "CHANGE_TOPIC_DETAILS",
+            "data": {
+                "topic_id": topicId,
+                "title": title,
+                "url": url,
+                "desc": desc
+            }
+        }))
+    }
+
     const setVotingTopic = async (topicId) => {
         if (!ws.current) return;
 
@@ -188,7 +202,7 @@ const DataProvider = ({children}) => {
     }
 
     const setUsername = (username) => {
-        if(ws.current) {
+        if (ws.current) {
             ws.current.close();
             ws.current = null;
         }
@@ -282,7 +296,8 @@ const DataProvider = ({children}) => {
             voteOnTopic,
             completeTopic,
             resetTopic,
-            removeTopic
+            removeTopic,
+            updateTopic
         }}>
             <LoadingOverlay visible={loading} zIndex={1000} overlayProps={{radius: "sm", blur: 2}}/>
             {children}

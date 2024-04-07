@@ -80,7 +80,7 @@ func (r *Room) AddTopic(title string, url string, desc string) {
 	})
 }
 
-func (r *Room) RemoveTopic(topicId ulid.ULID) {
+func (r *Room) RemoveTopic(topicId TopicID) {
 	r.mutex.Lock()
 	defer r.mutex.Unlock()
 
@@ -93,7 +93,7 @@ func (r *Room) RemoveTopic(topicId ulid.ULID) {
 	r.BroadcastEvent(TopicRemovedEvent{TopicID: topicId})
 }
 
-func (r *Room) CompleteTopic(topicId ulid.ULID, points string) {
+func (r *Room) CompleteTopic(topicId TopicID, points string) {
 	r.mutex.Lock()
 	defer r.mutex.Unlock()
 
@@ -117,7 +117,7 @@ func (r *Room) CompleteTopic(topicId ulid.ULID, points string) {
 	})
 }
 
-func (r *Room) ResetTopic(topicId ulid.ULID) {
+func (r *Room) ResetTopic(topicId TopicID) {
 	r.mutex.Lock()
 	defer r.mutex.Unlock()
 
@@ -133,7 +133,7 @@ func (r *Room) ResetTopic(topicId ulid.ULID) {
 	r.BroadcastEvent(TopicVotesResetedEvent{TopicID: topicId})
 }
 
-func (r *Room) VoteOnTopic(userId ulid.ULID, topicId ulid.ULID, points string) {
+func (r *Room) VoteOnTopic(userId ulid.ULID, topicId TopicID, points string) {
 	r.mutex.Lock()
 	defer r.mutex.Unlock()
 
@@ -147,7 +147,7 @@ func (r *Room) VoteOnTopic(userId ulid.ULID, topicId ulid.ULID, points string) {
 	r.BroadcastEvent(UserVotedEvent{UserID: userId})
 }
 
-func (r *Room) SetCurrentTopic(topicId ulid.ULID) {
+func (r *Room) SetCurrentTopic(topicId TopicID) {
 	r.mutex.Lock()
 	defer r.mutex.Unlock()
 
@@ -162,7 +162,7 @@ func (r *Room) SetCurrentTopic(topicId ulid.ULID) {
 	r.BroadcastEvent(CurrentTopicChangedEvent{TopicID: topicId})
 }
 
-func (r *Room) AddComment(topicId ulid.ULID, content string) {
+func (r *Room) AddComment(topicId TopicID, content string) {
 	r.mutex.Lock()
 	defer r.mutex.Unlock()
 
@@ -186,7 +186,7 @@ func (r *Room) AddComment(topicId ulid.ULID, content string) {
 	})
 }
 
-func (r *Room) ToggleVisibility(topicId ulid.ULID) {
+func (r *Room) ToggleVisibility(topicId TopicID) {
 	r.mutex.Lock()
 	defer r.mutex.Unlock()
 
@@ -199,6 +199,27 @@ func (r *Room) ToggleVisibility(topicId ulid.ULID) {
 
 	r.BroadcastEvent(VisibilityToggled{
 		TopicID: topicId,
+	})
+}
+
+func (r *Room) ChangeTopicDetails(topicId TopicID, title string, desc string, url string) {
+	r.mutex.Lock()
+	defer r.mutex.Unlock()
+
+	topic, ok := r.Topics[topicId]
+	if !ok {
+		return
+	}
+
+	topic.Title = title
+	topic.Description = desc
+	topic.Url = url
+
+	r.BroadcastEvent(TopicUpdatedEvent{
+		TopicID: topicId,
+		Title:   title,
+		Desc:    desc,
+		Url:     url,
 	})
 }
 

@@ -1,17 +1,18 @@
-import {ActionIcon, Button, Card, Group, Menu, Select, Text, Title, Tooltip} from "@mantine/core";
-import {FaHashtag, FaRegComment, FaCoffee, FaCheck, FaRegCopy} from "react-icons/fa";
+import {ActionIcon, Button, Card, Menu, Select, Text, Title, Tooltip} from "@mantine/core";
+import {FaCoffee, FaHashtag, FaRegComment} from "react-icons/fa";
 import {useHover} from "@mantine/hooks";
 import {Fragment, useContext, useState} from "react";
 import {DataContext} from "@/DataProvider";
-import {FaEllipsis} from "react-icons/fa6";
+import {FaEllipsis, FaLink} from "react-icons/fa6";
 import CompleteTopicModal from "@/components/CompleteTopicModal";
-import {FaLink} from "react-icons/fa6";
+import CreateTopicModal from "@/components/CreateTopicModal";
 
 
 const TopicCard = ({topic, onSelect}) => {
     const {room, setVotingTopic, resetTopic, removeTopic} = useContext(DataContext);
     const {hovered, ref} = useHover();
     const [completeTopic, setCompleteTopic] = useState();
+    const [editTopic, setEditTopic] = useState();
 
     const isCompleted = () => {
         return topic?.completed;
@@ -67,6 +68,7 @@ const TopicCard = ({topic, onSelect}) => {
 
     return (
         <Fragment>
+            <CreateTopicModal open={!!editTopic} editTopic={editTopic} setOpened={setEditTopic}/>
             <Card onClick={() => _onSelect()} ref={ref} shadow="sm" p="lg" radius="md" withBorder style={{
                 backgroundColor: getBgColor(),
                 cursor: 'pointer'
@@ -75,15 +77,17 @@ const TopicCard = ({topic, onSelect}) => {
                     <div style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>
                         <Title size="xs">{topic.title}</Title>
                         {topic.url &&
-                            <ActionIcon color="gray" variant="subtle" onClick={(e) => {
-                                e.stopPropagation()
-                                window.open(topic.url, '_blank').focus();
-                            }}>
-                                <FaLink/>
-                            </ActionIcon>
+                            <Tooltip label={topic.url}>
+                                <ActionIcon color="gray" variant="subtle" onClick={(e) => {
+                                    e.stopPropagation()
+                                    window.open(topic.url, '_blank').focus();
+                                }}>
+                                    <FaLink/>
+                                </ActionIcon>
+                            </Tooltip>
                         }
                     </div>
-                    <Menu withinPortal position="bottom-end" shadow="sm">
+                    <Menu withinPortal position="bottom-start" shadow="sm">
                         <Menu.Target>
                             <ActionIcon onClick={(e) => e.stopPropagation()} variant="subtle" color="gray">
                                 <FaEllipsis/>
@@ -91,6 +95,12 @@ const TopicCard = ({topic, onSelect}) => {
                         </Menu.Target>
 
                         <Menu.Dropdown>
+                            <Menu.Item onClick={(e) => {
+                                e.stopPropagation();
+                                setEditTopic(topic)
+                            }}>
+                                Edit details
+                            </Menu.Item>
                             <Menu.Item onClick={(e) => {
                                 e.stopPropagation();
                                 resetTopic(topic.topic_id)
@@ -101,6 +111,8 @@ const TopicCard = ({topic, onSelect}) => {
                                 color="red"
                                 onClick={(e) => {
                                     e.stopPropagation();
+                                    const res = window.confirm("Are you sure you wanna delete this topic?");
+                                    if (!res) return;
                                     removeTopic(topic.topic_id)
                                 }}
                             >

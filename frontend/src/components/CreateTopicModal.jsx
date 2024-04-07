@@ -1,10 +1,10 @@
 import {Button, Modal, TextInput} from "@mantine/core";
 import {useForm} from '@mantine/form';
-import {useContext} from "react";
+import {useContext, useEffect} from "react";
 import {DataContext} from "@/DataProvider";
 
-const CreateTopicModal = ({open, setOpened}) => {
-    const {createTopic} = useContext(DataContext);
+const CreateTopicModal = ({open, setOpened, editTopic}) => {
+    const {createTopic, updateTopic} = useContext(DataContext);
 
     const form = useForm({
         initialValues: {
@@ -19,16 +19,31 @@ const CreateTopicModal = ({open, setOpened}) => {
     });
 
     const onSubmit = async (val) => {
-        createTopic(val.title, val.desc, val.url)
+        if (editTopic) {
+            updateTopic(editTopic.topic_id, val.title, val.desc, val.url)
+        } else {
+            createTopic(val.title, val.desc, val.url)
+        }
+
         setOpened(false);
         form.reset();
     }
+
+    useEffect(() => {
+        if (!editTopic) return;
+
+        form.setValues({
+            title: editTopic.title,
+            desc: editTopic.description,
+            url: editTopic.url,
+        })
+    }, [editTopic]);
 
     return (
         <Modal
             opened={open}
             onClose={() => setOpened(false)}
-            title="Create a new topic"
+            title={editTopic ? 'Change topic details' : "Create a new topic"}
         >
             <form onSubmit={form.onSubmit(onSubmit)}>
                 <div style={{display: 'flex', flexDirection: 'column', gap: 10}}>
@@ -50,7 +65,9 @@ const CreateTopicModal = ({open, setOpened}) => {
                         {...form.getInputProps('url')}
                     />
 
-                    <Button type="submit" w="100%" mt={20}>Create Topic</Button>
+                    <Button type="submit" w="100%" mt={20}>
+                        {editTopic ? 'Change Details' : 'Create Topic'}
+                    </Button>
                 </div>
             </form>
         </Modal>
