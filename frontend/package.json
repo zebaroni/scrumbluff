@@ -14,6 +14,7 @@
     "@mantine/hooks": "^7.7.1",
     "axios": "^1.6.8",
     "next": "14.1.4",
+    "next-seo": "^6.5.0",
     "react": "^18",
     "react-card-flip": "^1.2.2",
     "react-dom": "^18",
