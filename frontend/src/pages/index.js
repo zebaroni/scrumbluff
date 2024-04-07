@@ -21,23 +21,6 @@ export default function Home() {
     return (
         <>
             <main>
-                <NextSeo
-                    title="ScrumBluff - Free Planning Poker Tool"
-                    description="Boost your team's productivity with Scrum Bluff, the top free online planning poker tool. Create virtual rooms, discuss topics, and enhance collaboration with ease."
-                    openGraph={{
-                        url: "https://scrumbluff.com",
-                        title: "ScrumBluff - Free Planning Poker Tool",
-                        description: "Boost your team's productivity with Scrum Bluff, the top free online planning poker tool. Create virtual rooms, discuss topics, and enhance collaboration with ease.",
-                        siteName: "ScrumBluff",
-                        images: [
-                            {url: 'https://scrumbluff.com/social-card.png'}
-                        ],
-                    }}
-                    twitter={{
-                        cardType: "summary_large_image",
-                        site: "https://scrumbluff.com"
-                    }}
-                />
                 <AppShell
                     header={{height: {base: 60, md: 70, lg: 80}}}
                     navbar={{
