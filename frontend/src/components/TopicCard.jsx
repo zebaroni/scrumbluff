@@ -69,6 +69,7 @@ const TopicCard = ({topic, onSelect}) => {
     return (
         <Fragment>
             <CreateTopicModal open={!!editTopic} editTopic={editTopic} setOpened={setEditTopic}/>
+            <CompleteTopicModal topic={completeTopic} setCompleteTopic={setCompleteTopic}/>
             <Card onClick={() => _onSelect()} ref={ref} shadow="sm" p="lg" radius="md" withBorder style={{
                 backgroundColor: getBgColor(),
                 cursor: 'pointer'
@@ -155,7 +156,7 @@ const TopicCard = ({topic, onSelect}) => {
                                     comboboxProps={{zIndex: 999999}}
                                     onClick={(e) => {
                                         e.stopPropagation()
-                                        setCompleteTopic(topic)
+                                        setCompleteTopic(topic.topic_id)
                                     }}
                                     size="xs"
                                     w={50}
@@ -165,7 +166,6 @@ const TopicCard = ({topic, onSelect}) => {
                     </Tooltip>
                 </div>
             </Card>
-            <CompleteTopicModal topic={completeTopic} setCompleteTopic={setCompleteTopic}/>
         </Fragment>
     )
 }
