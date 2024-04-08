@@ -107,7 +107,7 @@ func (r *Room) CompleteTopic(topicId TopicID, points string) {
 	topic.Points = points
 	topic.CompletedAt = time.Now()
 
-	if *r.CurrentTopicID == topic.TopicID {
+	if r.CurrentTopicID != nil && *r.CurrentTopicID == topic.TopicID {
 		r.CurrentTopicID = nil
 	}
 
