@@ -202,7 +202,7 @@ func (hub *Hub) ListenClientCommands(userConn *UserConnection) {
 			var cmd AddTopicCommand
 			err := json.Unmarshal(m.Data, &cmd)
 			if err == nil {
-				r.AddTopic(cmd.Title, cmd.URL, cmd.Content)
+				r.AddTopic(ulid.Make(), cmd.Title, cmd.URL, cmd.Content)
 			}
 		case "REMOVE_TOPIC":
 			var cmd RemoveTopicCommand
@@ -238,7 +238,7 @@ func (hub *Hub) ListenClientCommands(userConn *UserConnection) {
 			var cmd AddCommentCommand
 			err := json.Unmarshal(m.Data, &cmd)
 			if err == nil {
-				r.AddComment(cmd.TopicID, cmd.Content)
+				r.AddComment(ulid.Make(), cmd.TopicID, cmd.Content)
 			}
 		case "TOGGLE_VISIBILITY":
 			var cmd ToggleVisibility

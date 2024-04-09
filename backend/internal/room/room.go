@@ -26,11 +26,11 @@ type Topic struct {
 	Description  string               `json:"description"`
 	Comments     []Comment            `json:"comments"`
 	ClientVotes  map[ulid.ULID]string `json:"client_votes"`
-	Points       string               `json:"points"`
+	Points       *string              `json:"points"`
 	Completed    bool                 `json:"completed"`
 	VotesVisible bool                 `json:"votes_visible"`
 	CreatedAt    time.Time            `json:"created_at"`
-	CompletedAt  time.Time            `json:"completed_at"`
+	CompletedAt  *time.Time           `json:"completed_at"`
 }
 
 type RoomID = ulid.ULID
@@ -48,24 +48,24 @@ func NewRoom(id RoomID, topics map[TopicID]*Topic, createdAt time.Time) Room {
 		RoomID:         id,
 		Topics:         topics,
 		CurrentTopicID: nil,
-		BroadcastChan:  make(chan interface{}),
+		BroadcastChan:  make(chan interface{}, 500),
 		CreatedAt:      createdAt,
 	}
 }
 
-func (r *Room) AddTopic(title string, url string, desc string) {
+func (r *Room) AddTopic(topicId TopicID, title string, url string, desc string) {
 	r.mutex.Lock()
 	defer r.mutex.Unlock()
 
 	topic := Topic{
-		TopicID:      ulid.Make(),
+		TopicID:      topicId,
 		Title:        title,
 		Url:          url,
 		Description:  desc,
 		Comments:     make([]Comment, 0),
 		ClientVotes:  make(map[ulid.ULID]string),
 		Completed:    false,
-		Points:       "",
+		Points:       nil,
 		CreatedAt:    time.Now(),
 		VotesVisible: false,
 	}
@@ -103,9 +103,10 @@ func (r *Room) CompleteTopic(topicId TopicID, points string) {
 		return
 	}
 
+	t := time.Now()
+	topic.CompletedAt = &t
 	topic.Completed = true
-	topic.Points = points
-	topic.CompletedAt = time.Now()
+	topic.Points = &points
 
 	if r.CurrentTopicID != nil && *r.CurrentTopicID == topic.TopicID {
 		r.CurrentTopicID = nil
@@ -126,8 +127,9 @@ func (r *Room) ResetTopic(topicId TopicID) {
 		return
 	}
 
+	topic.Points = nil
 	topic.Completed = false
-	topic.Points = ""
+	topic.CompletedAt = nil
 	topic.ClientVotes = make(map[ulid.ULID]string)
 
 	r.BroadcastEvent(TopicVotesResetedEvent{TopicID: topicId})
@@ -157,12 +159,12 @@ func (r *Room) SetCurrentTopic(topicId TopicID) {
 	}
 
 	topic.VotesVisible = false
-	r.CurrentTopicID = &topic.TopicID
+	r.CurrentTopicID = &topicId
 
 	r.BroadcastEvent(CurrentTopicChangedEvent{TopicID: topicId})
 }
 
-func (r *Room) AddComment(topicId TopicID, content string) {
+func (r *Room) AddComment(commentId CommentID, topicId TopicID, content string) {
 	r.mutex.Lock()
 	defer r.mutex.Unlock()
 
@@ -172,7 +174,7 @@ func (r *Room) AddComment(topicId TopicID, content string) {
 	}
 
 	comment := Comment{
-		CommentID: ulid.Make(),
+		CommentID: commentId,
 		Content:   content,
 		CreatedAt: time.Now(),
 	}
