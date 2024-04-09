@@ -99,7 +99,7 @@ func (s *Server) GetRoomHandler(c echo.Context) error {
 		Description  string                 `json:"description"`
 		Completed    bool                   `json:"completed"`
 		VotesVisible bool                   `json:"votes_visible"`
-		Points       string                 `json:"points"`
+		Points       *string                `json:"points"`
 		ClientVotes  map[user.UserID]string `json:"client_votes"`
 		Comments     []CommentResponse      `json:"comments"`
 	}
