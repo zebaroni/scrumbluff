@@ -25,6 +25,7 @@ const MainView = () => {
     const roomUrl = room ? `${APP_URL}/?roomId=${room.room_id}` : null;
     const [completeTopic, setCompleteTopic] = useState();
     const availableOptions = [
+        {"value": "0.5", render: <Title size={25}>0.5</Title>},
         {"value": "1", render: <Title>1</Title>},
         {"value": "2", render: <Title>2</Title>},
         {"value": "3", render: <Title>3</Title>},
@@ -35,6 +36,20 @@ const MainView = () => {
         {"value": "coffee", render: <Title><FaCoffee/></Title>},
         {"value": "no_ans", render: <Title>?</Title>},
     ]
+
+    const _voteOnTopic = (topicId, value) => {
+        if(Math.random() > 0.85 && value === "0.5") {
+            const sure1 = window.confirm("Are you sure this is only a 0.5??")
+            if(!sure1) return;
+
+            const sure2 = window.confirm("No, i mean it, 0.5 is like... very low. Are you sure??")
+            if(!sure2) return;
+
+            window.alert("Alright then...")
+        }
+
+        voteOnTopic(topicId, value)
+    }
 
     const areVotesVisible = () => {
         return room?.topics?.[room.current_topic_id]?.votes_visible || false;
@@ -146,7 +161,7 @@ const MainView = () => {
                             <CardOption
                                 key={option.value}
                                 selected={getVote() === option.value}
-                                onSelect={() => voteOnTopic(room.current_topic_id, option.value)}>
+                                onSelect={() => _voteOnTopic(room.current_topic_id, option.value)}>
                                 {option.render}
                             </CardOption>
                         ))}

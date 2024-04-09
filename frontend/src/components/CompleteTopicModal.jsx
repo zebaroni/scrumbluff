@@ -23,6 +23,7 @@ const CompleteTopicModal = ({topic, setCompleteTopic}) => {
                 size="lg"
                 onChange={(_value) => _onSelect(topic, _value)}
                 data={[
+                    {value: '0.5', label: '0.5'},
                     {value: '1', label: '1'},
                     {value: '2', label: '2'},
                     {value: '3', label: '3'},
