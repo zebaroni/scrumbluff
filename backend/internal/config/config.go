@@ -12,11 +12,14 @@ type AppConfig struct {
 }
 
 func LoadConfig() (AppConfig, error) {
-	log.Println("Loading env variables...")
+	// Only tries to load the .env file when not running inside fly.io
+	if os.Getenv("FLY_MACHINE_ID") == "" {
+		log.Println("Loading env variables...")
 
-	err := godotenv.Load()
-	if err != nil {
-		return AppConfig{}, err
+		err := godotenv.Load()
+		if err != nil {
+			return AppConfig{}, err
+		}
 	}
 
 	return AppConfig{
