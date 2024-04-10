@@ -4,14 +4,13 @@ import (
 	"database/sql"
 	_ "github.com/mattn/go-sqlite3"
 	"log"
+	"planning-poker/internal/config"
 )
 
-const DB_FILE_PATH = "/scrumbluff_data/scrumbluff.db"
-
-func SetupDatabase() *sql.DB {
+func SetupDatabase(cfg config.AppConfig) *sql.DB {
 	log.Println("Setting up database...")
 
-	db, err := sql.Open("sqlite3", DB_FILE_PATH)
+	db, err := sql.Open("sqlite3", cfg.DatabaseFilePath)
 	if err != nil {
 		log.Fatal(err)
 	}

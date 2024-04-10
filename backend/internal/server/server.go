@@ -7,6 +7,7 @@ import (
 	"github.com/oklog/ulid/v2"
 	"net/http"
 	"os"
+	"planning-poker/internal/config"
 	"planning-poker/internal/hub"
 	"planning-poker/internal/room"
 	"planning-poker/internal/user"
@@ -23,12 +24,14 @@ var upgrader = websocket.Upgrader{
 }
 
 type Server struct {
+	cfg      config.AppConfig
 	Hub      *hub.Hub
 	RoomRepo room.RoomRepo
 }
 
-func NewServer(hub *hub.Hub, roomRepo room.RoomRepo) Server {
+func NewServer(cfg config.AppConfig, hub *hub.Hub, roomRepo room.RoomRepo) Server {
 	return Server{
+		cfg:      cfg,
 		Hub:      hub,
 		RoomRepo: roomRepo,
 	}
@@ -194,6 +197,10 @@ func (s *Server) GetMetrics(c echo.Context) error {
 		ConnectedUsers    int                 `json:"connected_users"`
 		CurrentGoroutines int                 `json:"current_goroutines"`
 		Details           map[string][]string `json:"details"`
+	}
+
+	if c.QueryParam("pw") != s.cfg.AdminPassword {
+		return c.JSON(http.StatusUnauthorized, "admin password required")
 	}
 
 	res := MetricsResponse{
