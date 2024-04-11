@@ -16,6 +16,9 @@ primary_region = 'gru'
   min_machines_running = 1
   max_machines_runnin = 1
   processes = ['app']
+  [http_service.concurrency]
+    hard_limit=300
+    soft_limit=300
 
 [[vm]]
   size = 'shared-cpu-1x'
