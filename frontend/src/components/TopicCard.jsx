@@ -1,4 +1,4 @@
-import {ActionIcon, Button, Card, Menu, Select, Text, Title, Tooltip} from "@mantine/core";
+import {ActionIcon, Button, Card, Menu, Select, Text, Tooltip} from "@mantine/core";
 import {FaCoffee, FaHashtag, FaRegComment} from "react-icons/fa";
 import {useHover} from "@mantine/hooks";
 import {Fragment, useContext, useState} from "react";
@@ -75,8 +75,11 @@ const TopicCard = ({topic, onSelect}) => {
                 cursor: 'pointer'
             }}>
                 <div style={{display: 'flex', width: '100%', justifyContent: 'space-between'}}>
-                    <div style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center'}}>
-                        <Title size="xs">{topic.title}</Title>
+                    <div style={{display: 'flex', flexDirection: 'row', gap: 5, alignItems: 'center', wordBreak: 'break-word'}}>
+                        <Text fw="bold" size="sm">{topic.title}</Text>
+                    </div>
+
+                    <Menu withinPortal position="bottom-start" shadow="sm">
                         {topic.url &&
                             <Tooltip label={topic.url}>
                                 <ActionIcon color="gray" variant="subtle" onClick={(e) => {
@@ -87,8 +90,6 @@ const TopicCard = ({topic, onSelect}) => {
                                 </ActionIcon>
                             </Tooltip>
                         }
-                    </div>
-                    <Menu withinPortal position="bottom-start" shadow="sm">
                         <Menu.Target>
                             <ActionIcon onClick={(e) => e.stopPropagation()} variant="subtle" color="gray">
                                 <FaEllipsis/>
@@ -122,7 +123,7 @@ const TopicCard = ({topic, onSelect}) => {
                         </Menu.Dropdown>
                     </Menu>
                 </div>
-                <Text mt={5} size="sm" color="dimmed">
+                <Text mt={10} size="sm" color="dimmed">
                     {topic.description.length > 0 ? topic.description : 'No description...'}
                 </Text>
 
