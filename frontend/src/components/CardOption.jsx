@@ -1,12 +1,13 @@
 import {useHover} from "@mantine/hooks";
+import {Title} from "@mantine/core";
 
-const CardOption = ({children, onSelect, selected}) => {
+const CardOption = ({option, onSelect, selected}) => {
     const {hovered, ref} = useHover();
 
     return (
         <div ref={ref} onClick={() => onSelect()} style={{
             width: 60,
-            height: 90,
+            height: 85,
             borderRadius: 10,
             border: '2px solid #1c7ed6',
             display: 'flex',
@@ -15,7 +16,9 @@ const CardOption = ({children, onSelect, selected}) => {
             background: hovered || selected ? '#e7f5ff' : 'white',
             cursor: 'pointer'
         }}>
-            {children}
+            <Title size={10}>
+                {option}
+            </Title>
         </div>
     )
 }

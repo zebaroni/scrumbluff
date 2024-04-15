@@ -27,7 +27,7 @@ const CommentsCard = () => {
             radius="md"
             withBorder={true}
             style={{
-                position: 'absolute',
+                position: 'fixed',
                 right: 10,
                 bottom: 0,
                 zIndex: 999,
