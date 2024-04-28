@@ -254,6 +254,14 @@ const DataProvider = ({children}) => {
                 refreshRoom();
             }
 
+            websocket.onclose = (event) => {
+                console.log("CloseEvent: ", event);
+            }
+
+            websocket.onerror = (event) => {
+                console.log("Error: ", event);
+            }
+
             setLoading(true);
             await new Promise((res, rej) => {
                 websocket.onopen = (e) => {
